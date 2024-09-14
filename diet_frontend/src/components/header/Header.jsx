@@ -1,12 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { Link, Navigate } from "react-router-dom";
-import {
-  HamBurger,
-  HomeLogo,
-  SearchLogo,
-  UserLogo,
-} from "../../../public/SvgComponents";
+import { HamBurger, HomeLogo, UserLogo } from "../../../public/SvgComponents";
 import ContextMenu from "../ContextMenu";
 import axios from "axios";
 
@@ -104,7 +99,7 @@ export default function Header() {
   }
 
   return (
-    <header className="w-full flex flex-row justify-between transition-all duration-300 h-15 border-b border-b-gray-200 pb-4">
+    <header className="w-full flex flex-row justify-between transition-all duration-300 h-15 border-b border-b-gray-200 pb-4 px-8">
       <Link
         to={"/"}
         className="flex items-center gap-1"
@@ -112,17 +107,20 @@ export default function Header() {
         onClick={handleContextMenuToggle}
       >
         <HomeLogo />
+        <span className="ml-2 text-gray-800 font-bold">
+          𝙳𝚒𝚎𝚝 𝚁𝚎𝚌𝚘𝚖𝚖𝚎𝚗𝚍𝚊𝚝𝚒𝚘𝚗
+        </span>
       </Link>
 
       <div className="flex items-center text-4xl gap-2">
-        <Link
+        {/* <Link
           to={"/"}
           className="flex items-center gap-1"
           ref={triggerElementRef}
           onClick={handleContextMenuToggle}
         >
-          Diet Reccomendation
-        </Link>
+          Diet Recommendation
+        </Link> */}
       </div>
 
       <div className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 hover:shadow-xl transition-all duration-500">
