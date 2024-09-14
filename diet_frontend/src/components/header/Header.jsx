@@ -121,7 +121,7 @@ export default function Header() {
           ref={triggerElementRef}
           onClick={handleContextMenuToggle}
         >
-          Diet Reccomendation
+          Diet Recommendation
         </Link>
       </div>
 
