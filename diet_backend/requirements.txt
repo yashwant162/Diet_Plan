@@ -8,3 +8,4 @@ pandas==1.5.1
 pydantic==1.10.4
 pyjwt==1.7.1
 sqlalchemy==2.0.34
+flask-cors==5.0.0
