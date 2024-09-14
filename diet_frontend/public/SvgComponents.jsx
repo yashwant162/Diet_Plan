@@ -21,13 +21,22 @@ export function HamBurger() {
 
 export function HomeLogo() {
   return (
-    <Link to="/">
+    <img
+      src={`./homepage_logo.png`}
+      alt="Logo"
+      style={{ cursor: "pointer", width: "50px", height: "auto" }}
+    />
+  );
+}
+
+export function DietFormLogo() {
+  return (
       <img
-        src={`./homepage_logo.png`}
+        className="mx-auto h-12 w-auto"
+        src={`./diet_form_logo.png`}
         alt="Logo"
-        style={{ cursor: "pointer", width: "50px", height: "auto" }}
+        style={{ cursor: "pointer", width: "120px", height: "auto" }}
       />
-    </Link>
   );
 }
 

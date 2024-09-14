@@ -5,7 +5,7 @@ import Footer from "./components/footer/Footer";
 export default function Layout() {
   return (
     <div className="flex flex-col">
-      <div className="relative py-4 px-8 flex flex-col min-h-fit rounded-lg">
+      <div className="relative py-4 flex flex-col min-h-fit rounded-lg">
         <Header />
         <Outlet />
       </div>
