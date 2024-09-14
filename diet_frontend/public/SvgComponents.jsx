@@ -31,34 +31,34 @@ export function HomeLogo() {
 
 export function DietFormLogo() {
   return (
-      <img
-        className="mx-auto h-12 w-auto"
-        src={`./diet_form_logo.png`}
-        alt="Logo"
-        style={{ cursor: "pointer", width: "120px", height: "auto" }}
-      />
+    <img
+      className="mx-auto h-12 w-auto"
+      src={`./diet_form_logo.png`}
+      alt="Logo"
+      style={{ cursor: "pointer", width: "120px", height: "auto" }}
+    />
   );
 }
 
 export function LoginLogo() {
   return (
-      <img
-        className="mx-auto h-12 w-auto"
-        src={`./security.png`}
-        alt="Logo"
-        style={{ cursor: "pointer", width: "50px", height: "auto" }}
-      />
+    <img
+      className="mx-auto h-12 w-auto"
+      src={`./security.png`}
+      alt="Logo"
+      style={{ cursor: "pointer", width: "120px", height: "auto" }}
+    />
   );
 }
 
 export function UserLogo() {
   return (
     <img
-        className="mx-auto "
-        src={`./hacker.png`}
-        alt="Logo"
-        style={{ cursor: "pointer", width: "22px", height: "auto" }}
-      />
+      className="mx-auto "
+      src={`./hacker.png`}
+      alt="Logo"
+      style={{ cursor: "pointer", width: "22px", height: "auto" }}
+    />
   );
 }
 
