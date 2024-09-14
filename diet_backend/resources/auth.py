@@ -7,6 +7,7 @@ from models import User
 from database import get_db
 import settings
 import json
+import pdb
 
 SECRET_KEY = settings.SECRET_KEY
 
@@ -60,7 +61,8 @@ class Login:
                     'user_id': user.id,
                     'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
                 }, SECRET_KEY, algorithm='HS256')
-                resp.media = {'token': token}
+                token_str = token.decode('utf-8')
+                resp.body = json.dumps({'token': token_str})
             else:
                 raise HTTPUnauthorized(description='Invalid email or password.')
 
