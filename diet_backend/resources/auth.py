@@ -25,11 +25,14 @@ class Register:
             # Check if the email is already registered
             existing_user = db.query(User).filter(User.email == email).first()
             if existing_user:
+                resp.body = json.dumps({'message': 'User already registered.'})
+                resp.status = falcon.HTTP_208
+                return
                 raise HTTPConflict(description='Email already registered.')
 
             # Create a new user
             new_user = User(first_name=first_name, last_name=last_name, email=email)
-            new_user.set_password(password)  # Assuming you have a method to hash the password
+            new_user.set_password(password)
             db.add(new_user)
             db.commit()
 
@@ -72,3 +75,37 @@ class Logout:
         # JWT tokens are stateless, typically no action needed to logout
         resp.media = {'message': 'Logged out successfully.'}
         resp.status = falcon.HTTP_200
+
+class Register:
+    def on_post(self, req, resp):
+        db = next(get_db())  # Get a database session
+
+        try:
+            raw_json = req.bounded_stream.read()
+            payload = json.loads(raw_json)
+            first_name = payload.get('first_name')
+            last_name = payload.get('last_name')
+            email = payload.get('email')
+            password = payload.get('password')
+
+            # Check if the email is already registered
+            existing_user = db.query(User).filter(User.email == email).first()
+            if existing_user:
+                resp.body = json.dumps({'message': 'User already registered.'})
+                resp.status = falcon.HTTP_208
+                return
+
+            # Create a new user
+            new_user = User(first_name=first_name, last_name=last_name, email=email)
+            new_user.set_password(password)  # Assuming you have a method to hash the password
+            db.add(new_user)
+            db.commit()
+
+            resp.body = json.dumps({'message': 'User registered successfully.'})
+            resp.status = falcon.HTTP_201  # 201 Created
+
+        except Exception as e:
+            db.rollback()  # Rollback in case of error
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": str(e)})
+            raise HTTPBadRequest(description=str(e))
