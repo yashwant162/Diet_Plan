@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react'; // Import useState for managing error state
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { LoginLogo } from "../../public/SvgComponents";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,
@@ -15,24 +15,24 @@ export default function LoginPage() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await fetch('http://127.0.0.1:8000/auth/login', {
-        method: 'POST',
+      const response = await fetch("http://127.0.0.1:8000/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
-        navigate('/');
+        navigate("/");
       } else {
         const errorData = await response.json();
-        console.error('Login failed:', errorData);
-        setErrorMessage(errorData.message || 'Login failed. Please try again.'); // Set error message
+        console.error("Login failed:", errorData);
+        setErrorMessage(errorData.message || "Login failed. Please try again."); // Set error message
       }
     } catch (error) {
-      console.error('An error occurred:', error);
-      setErrorMessage('An unexpected error occurred. Please try again.'); // Set error message for network errors
+      console.error("An error occurred:", error);
+      setErrorMessage("An unexpected error occurred. Please try again."); // Set error message for network errors
     }
   };
 
@@ -64,12 +64,14 @@ export default function LoginPage() {
                     },
                   })}
                   className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
+                    errors.email ? "border-indigo-500" : "border-gray-300"
                   } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                   placeholder="Email"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                  <p className="text-indigo-500 text-xs mt-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
               <div>
@@ -80,27 +82,36 @@ export default function LoginPage() {
                   id="password"
                   name="password"
                   type="password"
-                  {...register("password", { required: "Password is required" })}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                   className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
-                    errors.password ? 'border-red-500' : 'border-gray-300'
+                    errors.password ? "border-indigo-500" : "border-gray-300"
                   } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                   placeholder="Password"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-xs ">{errors.password.message}</p>
+                  <p className="text-indigo-500 text-xs ">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
             </div>
 
             <div>
-            {errorMessage && ( // Conditionally render the error message
-            <div className="text-red-500 text-center mb-4">
-              {errorMessage}
-            </div>
-          )}
+              {errorMessage && ( // Conditionally render the error message
+                <div className="text-indigo-500 text-center mb-4">
+                  {errorMessage}
+                </div>
+              )}
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="group relative w-full flex justify-center
+              py-2 px-4 border border-transparent text-sm font-medium
+              rounded-md text-white bg-indigo-600
+              focus:outline-none focus:ring-2 focus:ring-offset-2 
+              hover:shadow-[0_0_10px_2px_rgba(248,131,121,0.75)]
+            focus:ring-indigo-500"
               >
                 Login
               </button>

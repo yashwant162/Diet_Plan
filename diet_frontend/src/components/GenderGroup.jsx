@@ -12,20 +12,24 @@ export default function GenderGroup({ control }) {
         render={({ field }) => (
           <div className="flex">
             <label className="flex items-center space-x-2 text-primary">
-              <Radio
+              <input
                 {...field}
+                type="radio"
                 value="male"
                 checked={field.value === "male"}
-                className="checked:border-primary"
+                onChange={field.onChange}
+                className="appearance-none w-4 h-4 border-2 border-red-300 rounded-full checked:bg-primary"
               />
               <span>Male</span>
             </label>
-            <label className="flex items-center space-x-2 text-primary">
-              <Radio
+            <label className="flex items-center space-x-2 text-primary ml-4">
+              <input
                 {...field}
+                type="radio"
                 value="female"
                 checked={field.value === "female"}
-                className="checked:border-primary"
+                onChange={field.onChange}
+                className="appearance-none w-4 h-4 border-2 border-red-300 rounded-full checked:bg-primary"
               />
               <span>Female</span>
             </label>
