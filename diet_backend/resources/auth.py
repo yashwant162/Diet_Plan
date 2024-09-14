@@ -82,7 +82,9 @@ class Register:
             # Check if the email is already registered
             existing_user = db.query(User).filter(User.email == email).first()
             if existing_user:
-                raise HTTPConflict(description='Email already registered.')
+                resp.body = json.dumps({'message': 'User already registered.'})
+                resp.status = falcon.HTTP_208
+                return
 
             # Create a new user
             new_user = User(first_name=first_name, last_name=last_name, email=email)
@@ -90,11 +92,11 @@ class Register:
             db.add(new_user)
             db.commit()
 
-            resp.media = {'message': 'User registered successfully.'}
+            resp.body = json.dumps({'message': 'User registered successfully.'})
             resp.status = falcon.HTTP_201  # 201 Created
 
         except Exception as e:
             db.rollback()  # Rollback in case of error
             resp.status = falcon.HTTP_400
-            resp.body = {"error": str(e)}
+            resp.body = json.dumps({"error": str(e)})
             raise HTTPBadRequest(description=str(e))
