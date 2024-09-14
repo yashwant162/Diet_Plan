@@ -8,7 +8,7 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(find_dotenv(), override=True)
 ENV = os.environ
 
-DB_USER = ENV.get('user')
-DB_PASSWORD= ENV.get('user')
-DB_HOST = ENV.get('user')
-DB_DATABASE = ENV.get('user')
+DB_USER = ENV.get('USER')
+DB_PASSWORD= ENV.get('PASSWORD')
+DB_HOST = ENV.get('HOST')
+DB_DATABASE = ENV.get('DATABASE')

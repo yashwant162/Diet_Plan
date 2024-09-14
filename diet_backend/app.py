@@ -1,5 +1,5 @@
 import falcon
-# from resources import PredictionResource, GetPredictionResource
+from resources import GetPredictionResource
 
 class HelloWorld:
     def on_get(self, req, resp):
@@ -8,8 +8,8 @@ class HelloWorld:
 app = falcon.App()
 app.add_route('/', HelloWorld())
 # prediction_resource = PredictionResource()
-# get_prediction_resource = GetPredictionResource()
+get_prediction_resource = GetPredictionResource()
 
 # Routes
 # app.add_route('/prediction', prediction_resource)
-# app.add_route('/get_predictions', get_prediction_resource)
+app.add_route('/get_predictions', get_prediction_resource)
