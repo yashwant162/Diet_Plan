@@ -1,7 +1,6 @@
 import falcon
 from falcon_cors import CORS
 import pandas as pd
-from resources.auth import Auth
 from model import RecipeRecommendationResource
 from resources.meal_planner import MealPlanner
 from resources.nutrition import NutritionTracker
@@ -29,7 +28,6 @@ app = falcon.App(middleware=[cors.middleware])
 app.add_route('/', HelloWorld())
 
 # Authentication
-auth = Auth()
 app.add_route('/auth/register', auth.Register())
 app.add_route('/auth/login', auth.Login())
 app.add_route('/auth/logout', auth.Logout())
