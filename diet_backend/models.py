@@ -31,7 +31,7 @@ class MealPlan(Base):
     portion_size = Column(Float)
     calories = Column(Float)
 
-    user = relationship("User", back_populates="meals")
+    user = relationship("User")
 
 class DietaryRestriction(Base):
     __tablename__ = 'dietary_restrictions'
@@ -40,7 +40,7 @@ class DietaryRestriction(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     restriction = Column(String(100))
 
-    user = relationship("User", back_populates="dietary_restrictions")
+    user = relationship("User")
 
 class NutritionEntry(Base):
     __tablename__ = 'nutrition_entries'
@@ -63,7 +63,7 @@ class ProgressEntry(Base):
     weight = Column(Float)
     date_logged = Column(String(50))
 
-    user = relationship("User", back_populates="progress_entries")
+    user = relationship("User")
 
 # Database setup
 def db_init():

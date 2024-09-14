@@ -9,15 +9,19 @@ from resources.dietary_restrictions import DietaryRestrictions
 from resources.progress import ProgressTracker
 from resources.recipes import RecipeGenerator
 from resources.meal_scheduler import MealScheduler
+from resources import auth
+
 from database import db_init  # Import your database initialization function
 
 # Initialize the database
 db_init()
-
-cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173', 'http://localhost:8000'], allow_all_headers=True, allow_all_methods=True)
+cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173', 'http://localhost:8000'], 
+            allow_all_headers=True, 
+            allow_all_methods=True)
 
 dataset=pd.read_csv('Data/dataset.csv',compression='gzip')
-app = falcon.API(middleware=[cors.middleware])
+
+app = falcon.App(middleware=[cors.middleware])
 class HelloWorld:
     def on_get(self, req, resp):
         resp.media = {'message': 'Hello, World!'}
@@ -25,6 +29,8 @@ class HelloWorld:
 app = falcon.App()
 app.add_route('/', HelloWorld())
 
+app.add_route('/auth/register', auth.Register())
+app.add_route('/calculate_bmi', MealPlannerController.CalculateBMI())
 # Authentication
 auth = Auth()
 app.add_route('/auth/register', auth.register)
