@@ -48,8 +48,10 @@ class Login:
         db = next(get_db())  # Get a database session
 
         try:
-            email = req.media.get('email')
-            password = req.media.get('password')
+            raw_json = req.bounded_stream.read()
+            payload = json.loads(raw_json)
+            email = payload.get('email')
+            password = payload.get('password')
 
             # Validate email and password
             user = db.query(User).filter(User.email == email).first()
