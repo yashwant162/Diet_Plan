@@ -1,7 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { HamBurger, SearchLogo, UserLogo } from "../../../public/SvgComponents";
+import {
+  HamBurger,
+  HomeLogo,
+  SearchLogo,
+  UserLogo,
+} from "../../../public/SvgComponents";
 import ContextMenu from "../ContextMenu";
 import axios from "axios";
 
@@ -106,18 +111,18 @@ export default function Header() {
         ref={triggerElementRef}
         onClick={handleContextMenuToggle}
       >
-        Home
+        <HomeLogo />
       </Link>
 
-      <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
-        <div>First</div>
-        <div className="border-l border-gray-300"></div>
-        <div>Second</div>
-        <div className="border-l border-gray-300"></div>
-        <div>Third</div>
-        <button className="bg-primary text-white p-1 rounded-full">
-          <SearchLogo />
-        </button>
+      <div className="flex items-center text-4xl gap-2">
+        <Link
+          to={"/"}
+          className="flex items-center gap-1"
+          ref={triggerElementRef}
+          onClick={handleContextMenuToggle}
+        >
+          Diet Reccomendation
+        </Link>
       </div>
 
       <div className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 hover:shadow-xl transition-all duration-500">
@@ -127,7 +132,11 @@ export default function Header() {
           </div>
           <div>{<div>Anonymous</div>}</div>
         </Link>
-        <div ref={triggerElementRef} onClick={handleContextMenuToggle}>
+        <div
+          ref={triggerElementRef}
+          onClick={handleContextMenuToggle}
+          className="cursor-pointer"
+        >
           <HamBurger />
         </div>
         {/* {isContextMenuVisible && user && (

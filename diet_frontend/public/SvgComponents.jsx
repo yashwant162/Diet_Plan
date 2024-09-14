@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function HamBurger() {
   return (
     <svg
@@ -14,6 +16,18 @@ export function HamBurger() {
         d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
       />
     </svg>
+  );
+}
+
+export function HomeLogo() {
+  return (
+    <Link to="/">
+      <img
+        src={`./homepage_logo.png`}
+        alt="Logo"
+        style={{ cursor: "pointer", width: "50px", height: "auto" }}
+      />
+    </Link>
   );
 }
 
