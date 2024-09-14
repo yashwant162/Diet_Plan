@@ -34,15 +34,15 @@ export default function ContextMenu({
     >
       <ul>
         {options.map(({ name, link, callBack }) => (
-          <Link to={link}>
-            <li
-              className="hover:bg-gray-100 pl-5 pr-10  py-2 cursor-pointer"
-              key={name}
-              onClick={(e) => handleClick(e, callBack)}
-            >
+          <li
+            className="hover:bg-gray-100 pl-5 pr-10  py-2 cursor-pointer"
+            key={name}
+            onClick={(e) => handleClick(e, callBack)}
+          >
+            <Link to={link}>
               <span className="">{name}</span>
-            </li>
-          </Link>
+            </Link>
+          </li>
         ))}
       </ul>
     </div>

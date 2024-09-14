@@ -24,8 +24,8 @@ export default function Header() {
       },
     },
     {
-      name: "Help",
-      link: "/",
+      name: "About Us",
+      link: "/about-us",
       callBack: () => {
         setIsContextMenuVisible(false);
       },
@@ -54,7 +54,7 @@ export default function Header() {
       },
     },
     {
-      name: "Help",
+      name: "About Us",
       callBack: () => {
         setIsContextMenuVisible(false);
       },
