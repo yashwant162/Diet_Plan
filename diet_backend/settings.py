@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import *
+import datetime
 from os.path import join, dirname
 from dotenv import load_dotenv, find_dotenv
 
