@@ -21,21 +21,18 @@ cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173'
 
 dataset=pd.read_csv('Data/dataset.csv',compression='gzip')
 
-app = falcon.App(middleware=[cors.middleware])
 class HelloWorld:
     def on_get(self, req, resp):
         resp.media = {'message': 'Hello, World!'}
 
-app = falcon.App()
+app = falcon.App(middleware=[cors.middleware])
 app.add_route('/', HelloWorld())
 
-app.add_route('/auth/register', auth.Register())
-app.add_route('/calculate_bmi', MealPlannerController.CalculateBMI())
 # Authentication
 auth = Auth()
-app.add_route('/auth/register', auth.register)
-app.add_route('/auth/login', auth.login)
-app.add_route('/auth/logout', auth.logout)
+app.add_route('/auth/register', auth.Register())
+app.add_route('/auth/login', auth.Login())
+app.add_route('/auth/logout', auth.Logout())
 
 # Meal Planner
 meal_planner = MealPlanner()
