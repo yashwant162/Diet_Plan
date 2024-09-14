@@ -4,8 +4,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from werkzeug.security import generate_password_hash, check_password_hash
+import settings
+from passlib.context import CryptContext
 
 Base = declarative_base()
+
+# Create a password context for PBKDF2 hashing
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 class User(Base):
     __tablename__ = 'users'
@@ -14,13 +19,13 @@ class User(Base):
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
-    password_hash = Column(String(128), nullable=False)
+    password_hash = Column(String(255), nullable=False)  # Ensure sufficient length
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = pwd_context.hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return pwd_context.verify(password, self.password_hash)
 
 class MealPlan(Base):
     __tablename__ = 'meal_plans'
@@ -67,5 +72,5 @@ class ProgressEntry(Base):
 
 # Database setup
 def db_init():
-    engine = create_engine('sqlite:///diet_plan.db')  # Change to your preferred database
+    engine = create_engine(f'mysql+pymysql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}/{settings.DB_DATABASE}')  # Change to your preferred database
     Base.metadata.create_all(engine)

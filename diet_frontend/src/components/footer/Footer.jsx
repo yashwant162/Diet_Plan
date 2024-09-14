@@ -5,7 +5,7 @@ export default function Footer() {
   const links = ["privacy", "terms"];
 
   return (
-    <footer className="md:gap-6 mt-72 px-20 border-t border-t-gray-200 py-4 flex justify-between w-full text-sm  bg-white items-center ">
+    <footer className="md:gap-6 px-20 border-t border-t-gray-200 py-4 flex justify-between w-full text-sm  bg-white items-center ">
       <ul className="flex gap-3 font-normal cursor-pointer items-center">
         <li>&copy; {new Date().getFullYear()} Daffodil, Inc</li>
         {links.map((link) => (
