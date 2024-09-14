@@ -8,6 +8,7 @@ from resources.dietary_restrictions import DietaryRestrictions
 from resources.progress import ProgressTracker
 from resources.recipes import RecipeGenerator
 from resources.meal_scheduler import MealScheduler
+from resources.MealPlannerController import CalculateBMI
 from resources import auth
 
 from database import db_init  # Import your database initialization function
