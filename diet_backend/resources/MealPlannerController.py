@@ -39,24 +39,19 @@ class RecipeRecommendation:
             meal_count = int(payload.get('meal_count'))
             diet_type = payload.get('diet_type')
             weight_loss = float(plans.get(diet_plan))
-            if diet_type == "Vegetarian Diet":
-                keywords = ["Vegetarian", "Veg", "egg"]
-            elif diet_type == "Vegan":
-                keywords = ["Vegan", "lactose intolerant"]
-            else:
-                keywords = []
+
             if meal_count == 2:
                 meals_calories_perc={'lunch':0.60,'dinner':0.40}
             elif meal_count==3:
                 meals_calories_perc={'breakfast':0.35,'lunch':0.40,'dinner':0.25}
             elif meal_count==4:
-                meals_calories_perc={'breakfast':0.30,'morning snack':0.05,'lunch':0.40,'dinner':0.25}
+                meals_calories_perc={'breakfast':0.30,'morning_snack':0.05,'lunch':0.40,'dinner':0.25}
             else:
-                meals_calories_perc={'breakfast':0.30,'morning snack':0.05,'lunch':0.40,'afternoon snack':0.05,'dinner':0.20}
+                meals_calories_perc={'breakfast':0.30,'morning_snack':0.05,'lunch':0.40,'afternoon_snack':0.05,'dinner':0.20}
 
             bmi = calculate_bmi(weight, height)
             bmr = calculate_bmr(weight, height, age, gender)
-            total_calories, recipes = generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc, keywords, ingredients)
+            total_calories, recipes = generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc, keywords, ingredients, diet_type)
             resp.status = falcon.HTTP_200
             resp.body = json.dumps({'BMI': f'{bmi} kg/m²', "BMR": bmr, "total_calories": f'{total_calories} Calories/day', "recipes": recipes})
 
