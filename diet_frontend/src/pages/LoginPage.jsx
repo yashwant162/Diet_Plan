@@ -28,11 +28,11 @@ export default function LoginPage() {
       } else {
         const errorData = await response.json();
         console.error("Login failed:", errorData);
-        setErrorMessage(errorData.message || "Login failed. Please try again."); // Set error message
+        setErrorMessage(errorData.message || "Login failed. Please try again.");
       }
     } catch (error) {
       console.error("An error occurred:", error);
-      setErrorMessage("An unexpected error occurred. Please try again."); // Set error message for network errors
+      setErrorMessage("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -99,8 +99,8 @@ export default function LoginPage() {
             </div>
 
             <div>
-              {errorMessage && ( // Conditionally render the error message
-                <div className="text-indigo-500 text-center mb-4">
+              {errorMessage && (
+                <div className="text-primary text-center mb-4">
                   {errorMessage}
                 </div>
               )}
