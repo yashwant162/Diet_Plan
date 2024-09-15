@@ -100,15 +100,21 @@ const RecipeAccordion = ({ recipes, category }) => {
 const RecipesList = ({ recipes }) => {
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ flex: 1, padding: "0 10px" }}>
-        <RecipeAccordion recipes={recipes.breakfast} category="Breakfast" />
-      </div>
-      <div style={{ flex: 1, padding: "0 10px" }}>
-        <RecipeAccordion recipes={recipes.lunch} category="Lunch" />
-      </div>
-      <div style={{ flex: 1, padding: "0 10px" }}>
-        <RecipeAccordion recipes={recipes.dinner} category="Dinner" />
-      </div>
+      {recipes.breakfast && (
+        <div style={{ flex: 1, padding: "0 10px" }}>
+          <RecipeAccordion recipes={recipes.breakfast} category="Breakfast" />
+        </div>
+      )}
+      {recipes.lunch && (
+        <div style={{ flex: 1, padding: "0 10px" }}>
+          <RecipeAccordion recipes={recipes.lunch} category="Lunch" />
+        </div>
+      )}
+      {recipes.dinner && (
+        <div style={{ flex: 1, padding: "0 10px" }}>
+          <RecipeAccordion recipes={recipes.dinner} category="Dinner" />
+        </div>
+      )}
     </div>
   );
 };
