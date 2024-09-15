@@ -87,7 +87,14 @@ def generate_recommendations(weight, height, age, gender, activity, weight_loss,
 
             # Find similar recipes using the precomputed nearest neighbors model
             recommendations_idx = neigh.kneighbors(input_scaled, n_neighbors=10, return_distance=False)[0]
-            recommended_recipes = extracted_data.iloc[recommendations_idx]
+            extracted_data.fillna('',inplace=True)
+            recommended_recipes = extracted_data[[
+                "RecipeId", "Name", "CookTime", "PrepTime", "TotalTime", 
+                "RecipeIngredientParts", "Calories", "FatContent", 
+                "SaturatedFatContent", "CholesterolContent", "SodiumContent", 
+                "CarbohydrateContent", "FiberContent", "SugarContent", 
+                "ProteinContent", "RecipeInstructions"
+            ]].iloc[recommendations_idx]
             recommended_recipes = recommended_recipes.to_dict(orient='records')
             recommendations[meal] = recommended_recipes
             # Send response with the recommended recipes
