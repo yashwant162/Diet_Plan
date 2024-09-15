@@ -1,10 +1,16 @@
 import React from "react";
 import ReactECharts from "echarts-for-react";
 
-const NutritionPieChart = ({ recipes }) => {
-  const recipeArray = Object.values(recipes).flat();
+const NutritionPieChart = ({ recipes, selectedRecipes }) => {
+  const recipeArray = Object.keys(selectedRecipes)
+    .filter((category) => selectedRecipes[category])
+    .map((category) =>
+      recipes[category].find(
+        (recipe) => recipe.Name === selectedRecipes[category]
+      )
+    );
 
-  if (!Array.isArray(recipeArray) || recipeArray.length === 0) {
+  if (!recipeArray.length) {
     return null;
   }
 

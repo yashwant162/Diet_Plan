@@ -105,6 +105,14 @@ const RecipesList = ({ recipes }) => {
           <RecipeAccordion recipes={recipes.breakfast} category="Breakfast" />
         </div>
       )}
+      {recipes.morning_snack && (
+        <div style={{ flex: 1, padding: "0 10px" }}>
+          <RecipeAccordion
+            recipes={recipes.morning_snack}
+            category="Morning Snack"
+          />
+        </div>
+      )}
       {recipes.lunch && (
         <div style={{ flex: 1, padding: "0 10px" }}>
           <RecipeAccordion recipes={recipes.lunch} category="Lunch" />

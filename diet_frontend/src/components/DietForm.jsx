@@ -26,7 +26,7 @@ export default function DietForm() {
     try {
       console.log(data);
       const response = await fetch(
-        "http://127.0.0.1:8000/recommend_recipes",
+        "http://172.18.1.149:8000/recommend_recipes",
         {
           method: "POST",
           headers: {
@@ -54,7 +54,7 @@ export default function DietForm() {
       setCalories(responseData.total_calories);
       setRecipes(responseData.recipes);
       setResponse(true);
-      
+
       console.log(responseData);
     } catch (error) {
       console.error("Error:", error);
@@ -193,7 +193,7 @@ export default function DietForm() {
                 <Slider
                   control={control}
                   name="meal_count"
-                  labels={[2, 3, 4, 5]}
+                  labels={[2, 3, 4]}
                 />
               </div>
 
