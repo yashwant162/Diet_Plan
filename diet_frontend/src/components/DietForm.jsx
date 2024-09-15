@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export default function DietForm() {
   const [bmi, setBmi] = useState(null);
-  const [calories, setCalories] = useState(100);
+  const [calories, setCalories] = useState(null);
   const {
     register: dietAnalysis,
     handleSubmit,
