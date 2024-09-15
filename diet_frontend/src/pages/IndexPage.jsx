@@ -12,9 +12,7 @@ export default function IndexPage() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="bg-white bg-opacity-80 p-4 m-4 rounded-lg shadow-lg">
-          <DietForm />
-        </div>
+        <DietForm />
       </div>
     </>
   );
