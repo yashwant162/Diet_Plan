@@ -20,6 +20,7 @@ const Accordion = styled((props) => (
   backgroundColor: "#f0f0f0",
 }));
 ("@mui/material/styles");
+
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
     expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
@@ -43,6 +44,21 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
+
+const parseArrayString = (data) => {
+  try {
+    console.log(data);
+    const correctedString = data
+      .replace(/'/g, '"') // Replace single quotes with double quotes
+      .replace(/(\[\s*"\s*")(\s*\d+\s*")/g, '["$1"$2') // Handle number formatting
+      .replace(/(\s*"\s*\d+)(\s*"\s*])/g, '"$1"$2'); // Handle number formatting
+
+    return JSON.parse(correctedString);
+  } catch (error) {
+    console.error("Error parsing the array string:", error);
+    return [];
+  }
+};
 
 const RecipeAccordion = ({ recipes, category }) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -85,11 +101,25 @@ const RecipeAccordion = ({ recipes, category }) => {
           </AccordionSummary>
           <AccordionDetails>
             <Typography variant="body2">
-              <strong>Ingredients:</strong> {recipe.RecipeIngredientParts}
+              <strong>Ingredients:</strong>
             </Typography>
+            <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
+              {parseArrayString(recipe.RecipeIngredientParts).map(
+                (ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                )
+              )}
+            </ul>
             <Typography variant="body2" mt={2}>
-              <strong>Instructions:</strong> {recipe.RecipeInstructions}
+              <strong>Instructions:</strong>
             </Typography>
+            <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
+              {parseArrayString(recipe.RecipeInstructions).map(
+                (instruction, index) => (
+                  <li key={index}> {instruction}</li>
+                )
+              )}
+            </ul>
           </AccordionDetails>
         </Accordion>
       ))}

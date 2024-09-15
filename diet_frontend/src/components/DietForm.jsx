@@ -13,6 +13,7 @@ export default function DietForm() {
   const [calories, setCalories] = useState("");
   const [recipes, setRecipes] = useState({});
   const [response, setResponse] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {
     register: dietAnalysis,
     handleSubmit,
@@ -25,6 +26,7 @@ export default function DietForm() {
   const onSubmit = async (data) => {
     try {
       console.log(data);
+      setLoading(true);
       const response = await fetch(
         "http://172.18.1.149:8000/recommend_recipes",
         {
@@ -46,15 +48,16 @@ export default function DietForm() {
       );
 
       if (!response.ok) {
+        setLoading(false);
         throw new Error("Network response was not ok");
       }
-
       const responseData = await response.json();
       setBmi(responseData.BMI);
       setCalories(responseData.total_calories);
       setRecipes(responseData.recipes);
       setResponse(true);
 
+      setLoading(false);
       console.log(responseData);
     } catch (error) {
       console.error("Error:", error);
@@ -214,14 +217,17 @@ export default function DietForm() {
                 )}
                 <button
                   type="submit"
-                  className="group relative w-full flex justify-center
+                  className={`group relative w-full flex justify-center
               py-2 px-4 border border-transparent text-sm font-medium
-              rounded-md text-white bg-primary
+              rounded-md text-white ${
+                loading ? "bg-primary-light" : "bg-primary"
+              }
               focus:outline-none focus:ring-2 focus:ring-offset-2 
               hover:shadow-[0_0_10px_2px_rgba(248,131,121,0.75)]
-            focus:ring-indigo-500"
+            focus:ring-indigo-500`}
+                  disabled={loading}
                 >
-                  Submit Details
+                  {loading ? "Loading..." : "Submit Details"}
                 </button>
               </div>
             </form>
