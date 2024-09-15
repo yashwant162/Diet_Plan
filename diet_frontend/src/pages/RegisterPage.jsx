@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, Link  } from 'react-router-dom';
-import { useState } from 'react'; // Import useState for managing error state
+import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react"; // Import useState for managing error state
 import { LoginLogo } from "../../public/SvgComponents";
 
 export default function RegisterPage() {
@@ -15,24 +15,26 @@ export default function RegisterPage() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await fetch('http://127.0.0.1:8000/auth/register', {
-        method: 'POST',
+      const response = await fetch("http://172.18.1.168:8000/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
-        navigate('/'); // Redirect to home page after successful registration
+        navigate("/"); // Redirect to home page after successful registration
       } else {
         const errorData = await response.json();
-        console.error('Registration failed:', errorData);
-        setErrorMessage(errorData.message || 'Registration failed. Please try again.'); // Set error message
+        console.error("Registration failed:", errorData);
+        setErrorMessage(
+          errorData.message || "Registration failed. Please try again."
+        ); // Set error message
       }
     } catch (error) {
-      console.error('An error occurred:', error);
-      setErrorMessage('An unexpected error occurred. Please try again.'); // Set error message for network errors
+      console.error("An error occurred:", error);
+      setErrorMessage("An unexpected error occurred. Please try again."); // Set error message for network errors
     }
   };
 
@@ -57,14 +59,18 @@ export default function RegisterPage() {
                   id="first_name"
                   name="first_name"
                   type="text"
-                  {...register("first_name", { required: "First name is required" })}
+                  {...register("first_name", {
+                    required: "First name is required",
+                  })}
                   className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
-                    errors.first_name ? 'border-red-500' : 'border-gray-300'
+                    errors.first_name ? "border-red-500" : "border-gray-300"
                   } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                   placeholder="First Name"
                 />
                 {errors.first_name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.first_name.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.first_name.message}
+                  </p>
                 )}
               </div>
 
@@ -77,14 +83,18 @@ export default function RegisterPage() {
                   id="last_name"
                   name="last_name"
                   type="text"
-                  {...register("last_name", { required: "Last name is required" })}
+                  {...register("last_name", {
+                    required: "Last name is required",
+                  })}
                   className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
-                    errors.last_name ? 'border-red-500' : 'border-gray-300'
+                    errors.last_name ? "border-red-500" : "border-gray-300"
                   } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                   placeholder="Last Name"
                 />
                 {errors.last_name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.last_name.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.last_name.message}
+                  </p>
                 )}
               </div>
 
@@ -105,12 +115,14 @@ export default function RegisterPage() {
                     },
                   })}
                   className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
+                    errors.email ? "border-red-500" : "border-gray-300"
                   } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                   placeholder="Email"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
@@ -123,14 +135,18 @@ export default function RegisterPage() {
                   id="password"
                   name="password"
                   type="password"
-                  {...register("password", { required: "Password is required" })}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                   className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
-                    errors.password ? 'border-red-500' : 'border-gray-300'
+                    errors.password ? "border-red-500" : "border-gray-300"
                   } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                   placeholder="Password"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -151,7 +167,10 @@ export default function RegisterPage() {
               </button>
             </div>
             <p className=" text-gray-600 flex justify-center">
-                Already registered? <Link to="/login" className="text-blue-500 hover:underline">Login here</Link>
+              Already registered?{" "}
+              <Link to="/login" className="text-blue-500 hover:underline">
+                Login here
+              </Link>
             </p>
           </form>
         </div>

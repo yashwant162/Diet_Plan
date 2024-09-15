@@ -4,6 +4,8 @@ import { Input, Radio } from "@material-tailwind/react";
 import GenderGroup from "./GenderGroup";
 import Slider from "./Slider";
 import DropDown from "./DropDown";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function DietForm() {
   const {
@@ -12,9 +14,32 @@ export default function DietForm() {
     control,
     formState: { errors },
   } = useForm();
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    try {
+      const response = await fetch("http://172.18.1.168:8000/calculate_bmi", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.status === 200) {
+        navigate("/");
+      } else {
+        console.error("Login failed:", response.data);
+        setErrorMessage(
+          response.data.message || "Login failed. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setErrorMessage("An unexpected error occurred. Please try again.");
+    }
   };
 
   const exerciseLabels = [
@@ -51,7 +76,16 @@ export default function DietForm() {
                 type="number"
                 defaultValue={2}
                 min={2}
-                {...dietAnalysis("age", { required: "Age is required" })}
+                max={115}
+                {...dietAnalysis("age", {
+                  required: "Age is required",
+                })}
+                onInput={(e) => {
+                  const value = e.target.value;
+                  if (value === "" || Number(value) < 2) {
+                    e.target.value = 2;
+                  }
+                }}
                 labelProps={{ className: ` peer-focus:text-primary ` }}
                 label="Age"
               />
@@ -64,11 +98,22 @@ export default function DietForm() {
                 type="number"
                 defaultValue={50}
                 min={50}
+                max={220}
                 {...dietAnalysis("height", { required: "Height is required" })}
+                onInput={(e) => {
+                  const value = e.target.value;
+                  if (value === "" || Number(value) < 50) {
+                    e.target.value = 50;
+                  }
+                }}
                 labelProps={{ className: ` peer-focus:text-primary ` }}
                 label="Height(cm)"
               />
-              {errors.height && <p>{errors.height.message}</p>}
+              {errors.height && (
+                <div className="mb-4 text-red-600 text-sm">
+                  {errors.height.message}
+                </div>
+              )}
             </div>
           </div>
 
@@ -78,7 +123,14 @@ export default function DietForm() {
               type="number"
               defaultValue={10}
               min={10}
+              max={160}
               {...dietAnalysis("weight", { required: "Weight is required" })}
+              onInput={(e) => {
+                const value = e.target.value;
+                if (value === "" || Number(value) < 10) {
+                  e.target.value = 10;
+                }
+              }}
               labelProps={{ className: ` peer-focus:text-primary ` }}
               label="Weight(kg)"
             />
@@ -119,6 +171,11 @@ export default function DietForm() {
           </div>
 
           <div>
+            {errorMessage && (
+              <div className="text-primary text-center mb-4">
+                {errorMessage}
+              </div>
+            )}
             <button
               type="submit"
               className="group relative w-full flex justify-center
