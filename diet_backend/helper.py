@@ -14,7 +14,7 @@ scaler = StandardScaler()
 neigh = NearestNeighbors(metric='cosine', algorithm='brute')
 prep_data = np.load('Data/prep_data.npy')
 scaler = joblib.load('Data/scaler.pkl')
-dataset=pd.read_csv('Data/dataset.csv',compression='gzip')
+dataset=pd.read_csv('Data/dataset_2.csv',compression='gzip')
 
 extracted_data = dataset.copy()
 
@@ -116,7 +116,7 @@ def extract_keywords_filtered_data(dataframe, keywords):
     try:
         extracted_data=dataframe.copy()
         regex_string=''.join(map(lambda x:f'(?=.*{x})', keywords))
-        extracted_data=extracted_data[extracted_data['Keywords'].str.contains(regex_string,regex=True,flags=re.IGNORECASE)]
+        extracted_data=extracted_data.dropna()[extracted_data.dropna()['Keywords'].str.contains(regex_string,regex=True,flags=re.IGNORECASE)]
         return extracted_data
     except Exception as e:
         print("error in extract_keywords_filtered_data:", str(e))
