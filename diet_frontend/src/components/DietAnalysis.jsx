@@ -1,6 +1,7 @@
 import BMIDisplay from "./BMIDisplay";
 import CalorieDisplay from "./CalorieDisplay";
 import RecipesList from "./RecipesList";
+import NutritionPieChart from "./NutritionPieChart";
 
 export default function DietAnalysis({ bmi, calories, recipes }) {
   return (
@@ -13,6 +14,7 @@ export default function DietAnalysis({ bmi, calories, recipes }) {
         <div className="items-start justify-evenly w-full">
           {recipes && <RecipesList recipes={recipes} />}
         </div>
+        {recipes && <NutritionPieChart recipes={recipes} />}
       </div>
     </div>
   );
