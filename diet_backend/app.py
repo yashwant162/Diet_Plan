@@ -15,7 +15,7 @@ from database import db_init  # Import your database initialization function
 
 # Initialize the database
 db_init()
-cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173', 'http://localhost:8000'], 
+cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173', 'http://localhost:8000', "http://127.0.0.1:8000"], 
             allow_all_headers=True, 
             allow_all_methods=True)
 
@@ -32,6 +32,7 @@ app.add_route('/', HelloWorld())
 app.add_route('/auth/register', auth.Register())
 app.add_route('/auth/login', auth.Login())
 app.add_route('/auth/logout', auth.Logout())
+app.add_route('/recommend_recipes', CalculateBMI())
 
 # Meal Planner
 meal_planner = MealPlanner()

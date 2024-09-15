@@ -5,9 +5,11 @@ import GenderGroup from "./GenderGroup";
 import Slider from "./Slider";
 import DropDown from "./DropDown";
 import { useNavigate } from "react-router-dom";
+import BMIDisplay from "./BMIDisplay";
 import { useState } from "react";
 
 export default function DietForm() {
+  const [bmi, setBmi] = useState(null);
   const {
     register: dietAnalysis,
     handleSubmit,
@@ -17,30 +19,50 @@ export default function DietForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  // const onSubmit = (data) => {
+  //   const calculatedBMI = calculateBMI(data.weight, data.height);
+  //   setBmi(calculatedBMI); // Set the BMI state
+  //   console.log(data);
+  // };
   const onSubmit = async (data) => {
-    console.log(data);
     try {
-      const response = await fetch("http://172.18.1.168:8000/calculate_bmi", {
-        method: "POST",
+      console.log(data);
+      const response = await fetch('http://127.0.0.1:8000/recommend_recipes', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          age: data.age,
+          height: data.height,
+          weight: data.weight,
+          gender: data.gender,
+          activity: data.activity,
+          diet_plan: data.diet_plan,
+          meal_count: data.meal_count,
+          diet_type: data.diet_type
+        }),
       });
 
-      if (response.status === 200) {
-        navigate("/");
-      } else {
-        console.error("Login failed:", response.data);
-        setErrorMessage(
-          response.data.message || "Login failed. Please try again."
-        );
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+
+      const responseData = await response.json();
+      setBmi(responseData.BMI);
+      console.log(responseData);
     } catch (error) {
-      console.error("An error occurred:", error);
-      setErrorMessage("An unexpected error occurred. Please try again.");
+      console.error('Error:', error);
     }
   };
+
+
+  // const calculateBMI = (weight, height) => {
+  //   if (height <= 0 || weight <= 0) return 0;
+  //   const heightInMeters = height / 100;
+  //   return (weight / (heightInMeters * heightInMeters)).toFixed(1);
+  // };
 
   const exerciseLabels = [
     "Little/No Exercise(0-1 day/week)",
@@ -74,7 +96,7 @@ export default function DietForm() {
               <Input
                 id="age"
                 type="number"
-                defaultValue={2}
+                defaultValue={18}
                 min={2}
                 max={115}
                 {...dietAnalysis("age", {
@@ -96,7 +118,7 @@ export default function DietForm() {
               <Input
                 id="height"
                 type="number"
-                defaultValue={50}
+                defaultValue={165}
                 min={50}
                 max={220}
                 {...dietAnalysis("height", { required: "Height is required" })}
@@ -121,7 +143,7 @@ export default function DietForm() {
             <Input
               id="wight"
               type="number"
-              defaultValue={10}
+              defaultValue={60}
               min={10}
               max={160}
               {...dietAnalysis("weight", { required: "Weight is required" })}
@@ -158,7 +180,7 @@ export default function DietForm() {
 
           <div className="mb-4">
             <label className="block mb-2">Meals per day:</label>
-            <Slider control={control} name="meal_count" labels={[3, 4, 5]} />
+            <Slider control={control} name="meal_count" labels={[2,3, 4, 5]} />
           </div>
 
           <div className="mb-4">
@@ -189,6 +211,7 @@ export default function DietForm() {
             </button>
           </div>
         </form>
+        {bmi && <BMIDisplay bmi={bmi} />}
       </div>
     </div>
   );

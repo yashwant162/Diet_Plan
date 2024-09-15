@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AboutUsPage from "./pages/AboutUsPage";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000";
+axios.defaults.baseURL = "http://172.18.1.149:8000";
 axios.defaults.withCredentials = true;
 function App() {
   return (

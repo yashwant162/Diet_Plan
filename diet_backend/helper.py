@@ -72,12 +72,10 @@ def calories_calculator(weight, height, age, gender, activity):
 
 def generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc):
     try:
-        pdb.set_trace()
         total_calories=weight_loss*calories_calculator(weight, height, age, gender, activity)
         recommendations=[]
 
         for meal in meals_calories_perc:
-            pdb.set_trace()
             meal_calories=meals_calories_perc[meal]*total_calories
             if meal=='breakfast':
                 recommended_nutrition = [meal_calories,random.randint(10,30),random.randint(0,4),random.randint(0,30),random.randint(0,400),random.randint(40,75),random.randint(4,10),random.randint(0,10),random.randint(30,100)]
