@@ -1,17 +1,17 @@
 import React from "react";
 
 const BMIDisplay = ({ bmi }) => {
-  let category = "";
-
-  if (bmi < 18.5) {
-    category = "Underweight";
-  } else if (bmi >= 18.5 && bmi < 24.9) {
-    category = "Normal weight";
-  } else if (bmi >= 25 && bmi < 29.9) {
-    category = "Overweight";
-  } else {
-    category = "Obesity";
-  }
+    const numericBmi = parseFloat(bmi);
+    let category = "";
+    if (numericBmi < 18.5) {
+        category = "Underweight";
+    } else if (numericBmi >= 18.5 && numericBmi < 24.9) {
+        category = "Normal weight";
+    } else if (numericBmi >= 25 && numericBmi < 29.9) {
+        category = "Overweight";
+    } else {
+        category = "Obesity";
+    }
 
   return (
     <div className="max-w-md w-full space-y-8">
