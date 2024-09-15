@@ -6,10 +6,12 @@ import Slider from "./Slider";
 import DropDown from "./DropDown";
 import { useNavigate } from "react-router-dom";
 import BMIDisplay from "./BMIDisplay";
+import CalorieDisplay from "./CalorieDisplay"
 import { useState } from "react";
 
 export default function DietForm() {
   const [bmi, setBmi] = useState(null);
+  const [calories, setCalories] = useState(100);
   const {
     register: dietAnalysis,
     handleSubmit,
@@ -19,11 +21,6 @@ export default function DietForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  // const onSubmit = (data) => {
-  //   const calculatedBMI = calculateBMI(data.weight, data.height);
-  //   setBmi(calculatedBMI); // Set the BMI state
-  //   console.log(data);
-  // };
   const onSubmit = async (data) => {
     try {
       console.log(data);
@@ -51,18 +48,12 @@ export default function DietForm() {
 
       const responseData = await response.json();
       setBmi(responseData.BMI);
+      setCalories(responseData.total_calories)
       console.log(responseData);
     } catch (error) {
       console.error('Error:', error);
     }
   };
-
-
-  // const calculateBMI = (weight, height) => {
-  //   if (height <= 0 || weight <= 0) return 0;
-  //   const heightInMeters = height / 100;
-  //   return (weight / (heightInMeters * heightInMeters)).toFixed(1);
-  // };
 
   const exerciseLabels = [
     "Little/No Exercise(0-1 day/week)",
@@ -73,6 +64,9 @@ export default function DietForm() {
   ];
 
   const dietPlanLabels = [
+    "Extreme weight gain",
+    "Mild weight gain",
+    "Weight gain",
     "Maintain Weight",
     "Mild weight loss",
     "Weight loss",
@@ -212,6 +206,8 @@ export default function DietForm() {
           </div>
         </form>
         {bmi && <BMIDisplay bmi={bmi} />}
+        {calories && <CalorieDisplay calorie={calories} />}
+
       </div>
     </div>
   );
