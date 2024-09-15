@@ -52,10 +52,10 @@ export default function DietForm() {
       }
 
       const responseData = await response.json();
-      setResponse(true);
       setBmi(responseData.BMI);
       setCalories(responseData.total_calories);
       setRecipes(responseData.recipes);
+      setResponse(true);
       
       console.log(responseData);
     } catch (error) {
