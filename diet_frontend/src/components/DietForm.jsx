@@ -28,7 +28,7 @@ export default function DietForm() {
     try {
       console.log(data);
       const response = await fetch(
-        "http://172.18.1.168:8000/recommend_recipes",
+        "http://127.0.0.1:8000/recommend_recipes",
         {
           method: "POST",
           headers: {
@@ -52,10 +52,11 @@ export default function DietForm() {
       }
 
       const responseData = await response.json();
+      setResponse(true);
       setBmi(responseData.BMI);
       setCalories(responseData.total_calories);
       setRecipes(responseData.recipes);
-      setResponse(true);
+      
       console.log(responseData);
     } catch (error) {
       console.error("Error:", error);
