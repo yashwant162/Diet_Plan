@@ -16,7 +16,6 @@ prep_data = np.load('Data/prep_data.npy')
 scaler = joblib.load('Data/scaler.pkl')
 dataset=pd.read_csv('Data/dataset_2.csv',compression='gzip')
 
-extracted_data = dataset.copy()
 
 scaler.fit(prep_data)
 neigh.fit(prep_data)
@@ -63,8 +62,9 @@ def calories_calculator(weight, height, age, gender, activity):
     except Exception as e:
         print("Error while calculating calories:", str(e))
 
-def generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc, keywords, ingredients):
+def generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc, keywords, ingredients, diet_type):
     try:
+        extracted_data = dataset.copy() 
         total_calories=weight_loss*calories_calculator(weight, height, age, gender, activity)
         recommendations={}
 
@@ -80,13 +80,9 @@ def generate_recommendations(weight, height, age, gender, activity, weight_loss,
                 recommended_nutrition = [meal_calories,random.randint(10,30),random.randint(0,4),random.randint(0,30),random.randint(0,400),random.randint(40,75),random.randint(4,10),random.randint(0,10),random.randint(30,100)]
             recommended_nutrition = np.array(recommended_nutrition).reshape(1, -1)
             input_scaled = scaler.transform(recommended_nutrition)
-            if keywords != []:
-                filtered_data = extract_keywords_filtered_data(extracted_data, keywords)
-            if ingredients != []:
-                filtered_data = extract_ingredient_filtered_data(filtered_data, ingredients)
 
             # Find similar recipes using the precomputed nearest neighbors model
-            recommendations_idx = neigh.kneighbors(input_scaled, n_neighbors=10, return_distance=False)[0]
+            recommendations_idx = neigh.kneighbors(input_scaled, n_neighbors=30, return_distance=False)[0]
             extracted_data.fillna('',inplace=True)
             recommended_recipes = extracted_data[[
                 "RecipeId", "Name", "CookTime", "PrepTime", "TotalTime", 
