@@ -38,7 +38,7 @@ class RecipeRecommendation:
             diet_plan = payload.get('diet_plan')
             meal_count = int(payload.get('meal_count'))
             diet_type = payload.get('diet_type')
-            weight_loss = int(plans.get(diet_plan))
+            weight_loss = float(plans.get(diet_plan))
             if diet_type == "Vegetarian Diet":
                 keywords = ["Vegetarian", "Veg", "egg"]
             elif diet_type == "Vegan":
