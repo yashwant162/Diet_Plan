@@ -21,6 +21,7 @@ export default function Footer() {
         <li className="cursor-pointer flex gap-1 items-center">
           Support & Resources <CaretUpIcon />
         </li>
+        <li>YSR</li>
       </ul>
     </footer>
   );
