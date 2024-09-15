@@ -21,13 +21,6 @@ extracted_data = dataset.copy()
 scaler.fit(prep_data)
 neigh.fit(prep_data)
 
-def prepare_extracted_data():
-    max_list = [2000, 100, 13, 300, 2300, 325, 40, 40, 200]
-
-    # Filter the dataset based on the max_list values for each nutritional component
-    for column, maximum in zip(extracted_data.columns[6:15], max_list):
-        extracted_data = extracted_data[extracted_data[column] < maximum]
-
 
 def calculate_bmi(weight, height):
     bmi=round(weight/((height/100)**2),2)
@@ -70,14 +63,12 @@ def calories_calculator(weight, height, age, gender, activity):
     except Exception as e:
         print("Error while calculating calories:", str(e))
 
-def generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc):
+def generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc, keywords, ingredients):
     try:
-        pdb.set_trace()
         total_calories=weight_loss*calories_calculator(weight, height, age, gender, activity)
-        recommendations=[]
+        recommendations={}
 
         for meal in meals_calories_perc:
-            pdb.set_trace()
             meal_calories=meals_calories_perc[meal]*total_calories
             if meal=='breakfast':
                 recommended_nutrition = [meal_calories,random.randint(10,30),random.randint(0,4),random.randint(0,30),random.randint(0,400),random.randint(40,75),random.randint(4,10),random.randint(0,10),random.randint(30,100)]
@@ -89,17 +80,39 @@ def generate_recommendations(weight, height, age, gender, activity, weight_loss,
                 recommended_nutrition = [meal_calories,random.randint(10,30),random.randint(0,4),random.randint(0,30),random.randint(0,400),random.randint(40,75),random.randint(4,10),random.randint(0,10),random.randint(30,100)]
             recommended_nutrition = np.array(recommended_nutrition).reshape(1, -1)
             input_scaled = scaler.transform(recommended_nutrition)
+            if keywords != []:
+                filtered_data = extract_keywords_filtered_data(extracted_data, keywords)
+            if ingredients != []:
+                filtered_data = extract_ingredient_filtered_data(filtered_data, ingredients)
 
             # Find similar recipes using the precomputed nearest neighbors model
             recommendations_idx = neigh.kneighbors(input_scaled, n_neighbors=10, return_distance=False)[0]
             recommended_recipes = extracted_data.iloc[recommendations_idx]
             recommended_recipes = recommended_recipes.to_dict(orient='records')
-            recommendations.append(recommended_recipes)
+            recommendations[meal] = recommended_recipes
             # Send response with the recommended recipes
-            return recommendations
+        return total_calories,recommendations
     except Exception as e:
         print("Error in generating recipes: ", str(e))
     
+
+def extract_ingredient_filtered_data(dataframe, ingredients):
+    try:
+        extracted_data=dataframe.copy()
+        regex_string=''.join(map(lambda x:f'(?=.*{x})', ingredients))
+        extracted_data=extracted_data[extracted_data['RecipeIngredientParts'].str.contains(regex_string,regex=True,flags=re.IGNORECASE)]
+        return extracted_data
+    except Exception as e:
+        print("error in extract_ingredient_filtered_data:", str(e))
+
+def extract_keywords_filtered_data(dataframe, keywords):
+    try:
+        extracted_data=dataframe.copy()
+        regex_string=''.join(map(lambda x:f'(?=.*{x})', keywords))
+        extracted_data=extracted_data[extracted_data['Keywords'].str.contains(regex_string,regex=True,flags=re.IGNORECASE)]
+        return extracted_data
+    except Exception as e:
+        print("error in extract_keywords_filtered_data:", str(e))
         # for recommendation in recommendations:
         #     for recipe in recommendation:
         #         recipe['image_link']=find_image(recipe['Name']) 

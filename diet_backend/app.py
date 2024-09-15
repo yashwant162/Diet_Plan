@@ -8,14 +8,14 @@ from resources.dietary_restrictions import DietaryRestrictions
 from resources.progress import ProgressTracker
 from resources.recipes import RecipeGenerator
 from resources.meal_scheduler import MealScheduler
-from resources.MealPlannerController import CalculateBMI
+from resources.MealPlannerController import RecipeRecommendation
 from resources import auth
 
 from database import db_init  # Import your database initialization function
 
 # Initialize the database
 db_init()
-cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173', 'http://localhost:8000'], 
+cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:8000', "http://172.18.1.168:8000"], 
             allow_all_headers=True, 
             allow_all_methods=True)
 
@@ -32,6 +32,8 @@ app.add_route('/', HelloWorld())
 app.add_route('/auth/register', auth.Register())
 app.add_route('/auth/login', auth.Login())
 app.add_route('/auth/logout', auth.Logout())
+
+app.add_route('/recommend_recipes', RecipeRecommendation())
 
 # Meal Planner
 meal_planner = MealPlanner()
