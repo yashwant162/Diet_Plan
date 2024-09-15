@@ -15,7 +15,7 @@ export default function RegisterPage() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await fetch("http://172.18.1.168:8000/auth/register", {
+      const response = await fetch("http://172.18.1.149:8000/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
