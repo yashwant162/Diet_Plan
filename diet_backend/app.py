@@ -19,8 +19,6 @@ cors = CORS(allow_origins_list=['http://localhost:8080', 'http://localhost:5173'
             allow_all_headers=True, 
             allow_all_methods=True)
 
-dataset=pd.read_csv('Data/dataset.csv',compression='gzip')
-
 class HelloWorld:
     def on_get(self, req, resp):
         resp.media = {'message': 'Hello, World!'}
