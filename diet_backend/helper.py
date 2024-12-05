@@ -14,7 +14,9 @@ scaler = StandardScaler()
 neigh = NearestNeighbors(metric='cosine', algorithm='brute')
 prep_data = np.load('Data/prep_data.npy')
 scaler = joblib.load('Data/scaler.pkl')
-dataset=pd.read_csv('Data/dataset_2.csv',compression='gzip')
+# dataset=pd.read_csv('Data/dataset_2.csv',compression='gzip')
+non_veg_dataset=pd.read_csv('Data/non_veg_dataset.csv',compression='gzip')
+veg_dataset=pd.read_csv('Data/veg_dataset.csv',compression='gzip')
 
 
 scaler.fit(prep_data)
@@ -64,7 +66,11 @@ def calories_calculator(weight, height, age, gender, activity):
 
 def generate_recommendations(weight, height, age, gender, activity, weight_loss, meals_calories_perc, keywords, ingredients, diet_type):
     try:
-        extracted_data = dataset.copy() 
+        if diet_type == "Vegetarian Diet" and diet_type == "Vegan":
+            extracted_data = veg_dataset.copy() 
+        else:
+            extracted_data = non_veg_dataset.copy() 
+
         total_calories=weight_loss*calories_calculator(weight, height, age, gender, activity)
         recommendations={}
 
