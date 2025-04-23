@@ -7,9 +7,6 @@ class GetPredictionResource:
     def on_get(self, req, resp):
         connection = get_db_connection()
         try:
-            # cursor = connection.cursor(dictionary=True)
-            # cursor.execute("SELECT * FROM predictions")
-            # result = cursor.fetchall()
             pdb.set_trace()
             result = {
                 "recipes": {
